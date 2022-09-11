@@ -12,12 +12,39 @@ the function below should be the only one in this file.
 
 #include "split.h"
 
+#include <iostream>
+#include <string>
+#include <cstddef>
+
+using namespace std;
+
 /* Add a prototype for a helper function here if you need */
 
 void split(Node*& in, Node*& odds, Node*& evens)
 {
-  /* Add code here */
-// WRITE YOUR CODE HERE
+  
+  if(in == nullptr)
+  {
+    return;
+  }
+  
+  if(in->value % 2 == 0) // even case
+  {
+    
+    
+    evens = in;
+    in = in->next;
+    evens->next = NULL;
+    split(in, odds, evens->next);
+
+  } else { // odd case
+
+    odds = in;
+    in = in->next;
+    odds->next = NULL;
+    split(in, odds->next, evens);
+
+  }   
 
 }
 
