@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 ULListStr::ULListStr()
 {
@@ -32,9 +31,7 @@ size_t ULListStr::size() const
 
 void ULListStr::push_back(const std::string& val)
 {
-  // code below...
-
-  // 3 options, empty, room left or full
+  // 3 options, empty, room left or no room
 
   if(empty()) // empty
   {
@@ -53,7 +50,7 @@ void ULListStr::push_back(const std::string& val)
       tail_->val[tail_->last] = val;
       tail_->last++;
 
-    } else { // full
+    } else { // no room
       // else it should be equal to 10
       Item* node = new Item();
       
@@ -95,10 +92,9 @@ void ULListStr::push_front(const std::string& val)
     if(head_->first > 0) // only partially full case
     {
       head_->val[head_->first -1] = val;
-      head_->first--; // what happens in the case of push_back to create a new node
-      // and then a push front call
+      head_->first--; 
 
-    } else {
+    } else { // room left case
       Item* node = new Item();
       node->next = head_;
       node->prev = NULL;
@@ -126,15 +122,14 @@ void ULListStr::push_front(const std::string& val)
 
 void ULListStr::pop_front()
 {
-  if(!empty())
+  if(!empty()) // cannot pop if empty
   {
-    if(head_->first != 9) // don't have to delete node
+    if(head_->first != 9) // if last val in Item/node
     {
-      // memory is already allocated so shouldn't matter
       head_->first += 1;
 
 
-    } else { // have to delete the node because it will be empty once popped back
+    } else { // last val in Item/node
       
       if(head_->next != NULL){
         head_ = head_->next;
@@ -166,20 +161,17 @@ void ULListStr::pop_front()
 
 void ULListStr::pop_back()
 {
-  // code below
-  if(!empty())
+  if(!empty()) // cannot pop if empty
   {
     if(tail_->last - tail_->first >1)
     {
       tail_->last--;
-    } else {
+    } else { // last val in node so remove the node and decrement size_
       tail_ = tail_->prev;
       delete tail_->next;
       tail_->next = NULL;
 
       size_--;
-
-      // need to put in code for assigning new values to first and last
 
       if(tail_ != head_)
       {
@@ -204,13 +196,13 @@ std::string* ULListStr::getValAtLoc(size_t loc) const {
   int index = head_->first;
 
 
-  for(unsigned int i = 0; i < loc; i++){
+  for(unsigned int i = 0; i < loc; i++){ // for loop runs in o(n) with only if statements inside
 
-      if(index == 9)
+      if(index == 9) // signifies end of node
       {
         temp = temp->next;
         index = 0;
-      } else {
+      } else { // otherwise, just increment
         index++;
       }
   }

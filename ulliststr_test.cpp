@@ -3,7 +3,6 @@
 #include <iostream>
 using namespace std;
 
-
 int main(int argc, char* argv[])
 {
 
@@ -16,20 +15,22 @@ int main(int argc, char* argv[])
 
   cout <<"The back value is: " + test.back() << endl;
 
+  // both tests should produce 8
+
   test.push_back("7");
 
   test.push_front("5");
   test.push_front("3");
 
   test.pop_back();
-  test.pop_back(); // here is the error
+  test.pop_back(); 
 
   cout << "The front is now: " + test.front() << endl;
 
   cout << "And the back now is: " + test.back() << endl;
 
-  // the front should be 8
-  // the back should be 7
+  // the front should be 3
+  // the back should be 5
 
   test.push_back("4");
   test.push_back("17");
